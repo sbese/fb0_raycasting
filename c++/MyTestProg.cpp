@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
         fb_test.fill_circle(cam.x,cam.y,10,fb_color::fb_green);
         cam.ray_cast(std::vector<Wall>{w1,w2,w3,ww1,ww2,ww3,ww4});
         fb_test.show();
-        usleep(32000);
+        usleep(16000);
     }
 }
 
