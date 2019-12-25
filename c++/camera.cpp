@@ -143,11 +143,12 @@ void Camera::rotate(double _angle)
 
 double Camera::get_distance (double x1, double  y1, double  x2, double  y2)
 {
-    return pow((pow((x1-x2),2) + pow((y1-y2),2)),(1/2));
+    return sqrt( (pow((x1-x2),2) + pow((y1-y2),2)));
 }
 
-void Camera::ray_cast(std::vector<Wall> walls)
+std::vector<ray_cast_return> Camera::ray_cast(std::vector<Wall> walls)
 {
+    std::vector<ray_cast_return> ret;
     double d,dx,dy,nd;
     Wall w=walls[0];
     cros_point_data cords;
@@ -173,7 +174,25 @@ void Camera::ray_cast(std::vector<Wall> walls)
         }
         if(d!= INFINITY)
         {
-            rays[i].draw_line((int)dx,(int)dy);
+            // rays[i].draw_line((int)dx,(int)dy);
+            ret.push_back(ray_cast_return{i,dx,dy,d});
         }
     }
+    data_for_render = ret;
+    return ret;
+}
+
+void Camera::render_3d()
+{
+    int cord;
+    int block_size = buf->vinfo.xres/count_of_rays;
+    for(int i=0; i<data_for_render.size();i++)
+    {
+        cord = (buf->vinfo.xres/2)/data_for_render[i].d*55;
+        buf->draw_rectangle(data_for_render[i].ray*block_size,
+                            buf->vinfo.yres/2-cord,
+                            (data_for_render[i].ray+1)*block_size,
+                            buf->vinfo.yres/2+cord);
+    }
+
 }

@@ -11,6 +11,13 @@ struct cros_point_data
     double x,y;
 };
 
+struct ray_cast_return
+{
+    int ray;
+    double x,y,d;
+    // Wall wall;
+};
+
 
 class Ray
 {
@@ -42,6 +49,7 @@ public:
 class Camera
 {
 private:
+    std::vector<ray_cast_return> data_for_render;
     double view_angle, rotation_angle;
     fb_buf *buf;
     std::vector <Ray> rays;
@@ -55,5 +63,7 @@ public:
     void move_to(int _x, int _y);
     void rotate(double _angle);
     double get_distance (double x1, double  y1, double  x2, double  y2);
-    void ray_cast(std::vector<Wall> walls);
+    std::vector<ray_cast_return> ray_cast(std::vector<Wall> walls);
+    void render_3d();
+    
 };

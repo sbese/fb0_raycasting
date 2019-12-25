@@ -16,11 +16,11 @@ class fb_buf;
 class fb_buf
 {
 private:
-    fb_var_screeninfo vinfo;
     int fbfd, fbsize, fb;
     unsigned char *fbbuf, *fb_black_buf, *temp_buf;
 
 public:
+    fb_var_screeninfo vinfo;
     fb_buf(/* args */);
     ~fb_buf();
     void set_pixel(int x, int y, u_char r = 255, u_char g = 255, u_char b = 255);

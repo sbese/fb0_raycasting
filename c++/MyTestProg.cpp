@@ -3,6 +3,9 @@
 #include "camera.h"
 #include <iostream>
 
+#include <stdio.h>
+#include <termios.h>
+
 
 struct point
 {
@@ -22,24 +25,59 @@ int main(int argc, char const *argv[])
     Wall ww2(0,0,800,0,fb_test);
     Wall ww3(800,600,0,600,fb_test);
     Wall ww4(800,600,800,0,fb_test);
-    Camera cam(510,200,20,M_PI/2,0,fb_test);
+    Camera cam(510,200,800,M_PI/2,0,fb_test);
     // Ray test_ray(300,0,0,fb_test);
     // cros_point_data cp;
 
     // test_ray.draw_line(test_ray.x + (test_ray.dir_x*100),test_ray.y + (test_ray.dir_y*100));
-    for(int i = 0; i<6000; ++i)
+    // while(1)
+    // {
+    //     fb_test.clear_screen();
+    //     w1.draw_wall();
+    //     w2.draw_wall();
+    //     w3.draw_wall();
+    //     // cam.move_to(300,i);
+    //     cam.rotate(M_PI/200/3);
+    //     fb_test.fill_circle(cam.x,cam.y,10,fb_color::fb_green);
+    //     cam.ray_cast(std::vector<Wall>{w1,w2,w3,ww1,ww2,ww3,ww4});
+    //     fb_test.show();
+    //     // usleep(16000);
+    // }
+
+    struct termios oldt, newt;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldt );
+    newt = oldt;
+    newt.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newt );
+
+    while(1)
     {
         fb_test.clear_screen();
-        w1.draw_wall();
-        w2.draw_wall();
-        w3.draw_wall();
-        // cam.move_to(300,i);
-        cam.rotate(M_PI/200/3);
-        fb_test.fill_circle(cam.x,cam.y,10,fb_color::fb_green);
+        // w1.draw_wall();
+        // w2.draw_wall();
+        // w3.draw_wall();
+
+        ch = getchar();
+        switch(ch)
+        {
+            case 's': cam.move(-10); break;
+            case 'S': cam.move(-10); break;
+            case 'w': cam.move(10); break;
+            case 'W': cam.move(10); break;
+            case 'a': cam.rotate(-M_PI/18); break;
+            case 'A': cam.rotate(-M_PI/18); break;
+            case 'd': cam.rotate(M_PI/18); break;
+            case 'D': cam.rotate(M_PI/18); break;
+            
+        }
+
+        // fb_test.fill_circle(cam.x,cam.y,10,fb_color::fb_green);
         cam.ray_cast(std::vector<Wall>{w1,w2,w3,ww1,ww2,ww3,ww4});
+        cam.render_3d();
         fb_test.show();
-        usleep(16000);
     }
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
 }
 
 

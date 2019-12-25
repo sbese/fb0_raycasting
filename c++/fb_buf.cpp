@@ -193,10 +193,10 @@ void fb_buf::draw_rectangle(int x1,int y1, int x2,int y2, u_char r, u_char g, u_
     if (py1>vinfo.yres) py1 = vinfo.yres;
     if (py2>vinfo.yres) py2 = vinfo.yres;
 
-    draw_horisontal_line(px1,px1,py2,r,g,b);
     draw_horisontal_line(px1,px2,py1,r,g,b);
-    draw_horisontal_line(px2,px1,py2,r,g,b);
-    draw_horisontal_line(px2,px2,py1,r,g,b);
+    draw_horisontal_line(px1,px2,py2,r,g,b);
+    draw_line(px1,py1,px1,py2,r,g,b);
+    draw_line(px2,py1,px2,py2,r,g,b);
 }
 
 void fb_buf::draw_rectangle(int x1,int y1, int x2,int y2, fb_color color) 
