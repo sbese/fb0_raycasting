@@ -25,6 +25,7 @@ int main(int argc, char const *argv[])
     Wall ww2(0,0,800,0,fb_test);
     Wall ww3(800,600,0,600,fb_test);
     Wall ww4(800,600,800,0,fb_test);
+    Wall test_wall(0,0,0,10000,fb_test);
     Camera cam(510,200,800,M_PI/2,0,fb_test);
     // Ray test_ray(300,0,0,fb_test);
     // cros_point_data cp;
@@ -73,7 +74,7 @@ int main(int argc, char const *argv[])
         }
 
         // fb_test.fill_circle(cam.x,cam.y,10,fb_color::fb_green);
-        cam.ray_cast(std::vector<Wall>{w1,w2,w3,ww1,ww2,ww3,ww4});
+        cam.ray_cast(std::vector<Wall>{w1,w2,w3,ww1,ww2,ww3,ww4,test_wall});
         cam.render_3d();
         fb_test.show();
     }

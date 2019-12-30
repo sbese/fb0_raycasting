@@ -1,28 +1,7 @@
-class test():
-    def __init__(self):
-        self.a = 0
+from PIL import Image
+im = Image.open("P:\\fb0\\tkinter\\texture.png")
 
-    def inc(self):
-        self.a += 1
-
-
-class test2():
-    def __init__(self):
-        pass
-
-    def f(self, arg):
-        self.arg = arg
-        self.arg.inc()
-
-
-t = test()
-print(t.a)
-t.inc()
-print(t.a)
-t2 = test2()
-t2.f(t)
-print(t.a)
-
-# 0
-# 1
-# 2
+a = [ [list(im.getpixel((j, i))[:3]) for j in range(64) ] for i in range(64)]
+f = open('arr.txt', "w")
+f.write(str(a))
+f.close()

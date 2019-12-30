@@ -15,7 +15,7 @@ struct ray_cast_return
 {
     int ray;
     double x,y,d;
-    // Wall wall;
+    Wall *wall;
 };
 
 
@@ -40,10 +40,11 @@ class Wall
 private:
     fb_buf *buf;
 public:
-    int ax,ay,bx,by;
-    Wall(int _ax, int _ay, int _bx, int _by, fb_buf &_buf);
+    double ax,ay,bx,by;
+    Wall(double _ax, double _ay, double _bx, double _by, fb_buf &_buf);
     ~Wall(){};
     void draw_wall();
+    int get_pixel_column(double _x, double _y);
 };
 
 class Camera
@@ -67,3 +68,4 @@ public:
     void render_3d();
     
 };
+
